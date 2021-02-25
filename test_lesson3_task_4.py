@@ -1,9 +1,7 @@
 import pytest
-import unittest
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options
 from PythonCourse.login import Login
-
 
 
 @pytest.fixture
@@ -12,11 +10,13 @@ def chrome_driver(request):
     request.addfinalizer(wd.quit)
     return wd
 
+
 @pytest.fixture
 def edge_driver(request):
     wd = webdriver.Edge()
     request.addfinalizer(wd.quit)
     return wd
+
 
 @pytest.fixture
 def firefox_driver(request):
@@ -27,11 +27,14 @@ def firefox_driver(request):
     request.addfinalizer(wd.quit)
     return wd
 
+
 def test_lesson_3_task4_firefox(firefox_driver):
     Login.login(firefox_driver)
 
+
 def test_lesson_3_task4_chrome(chrome_driver):
     Login.login(chrome_driver)
+
 
 def test_lesson_3_task4_edge(edge_driver):
     Login.login(edge_driver)
