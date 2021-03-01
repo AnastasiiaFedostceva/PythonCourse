@@ -11,7 +11,7 @@ def chrome_driver(request):
     return wd
 
 
-def test_lesson4_task_7_chrome(chrome_driver):
+def test_lesson5_task_9_1_chrome(chrome_driver):
     Login.login(chrome_driver)
     url1 = "http://localhost/litecart/admin/?app=countries&doc=countries"
     chrome_driver.get(url1)
