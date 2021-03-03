@@ -1,3 +1,4 @@
+import os
 import time
 
 from selenium.webdriver.common.by import By
@@ -109,9 +110,9 @@ class Item(BaseClass):
         driver.find_element_by_css_selector("input[name=quantity]").send_keys(100)
         select_status = Select(driver.find_element_by_css_selector("select[name=sold_out_status_id]"))
         select_status.select_by_visible_text("Temporary sold out")
-        print(f"{Actions.file_path}/attachments/rock.jpg")
-        driver.find_element_by_css_selector("input[name='new_images[]']").send_keys(
-            f"{Actions.file_path}/attachments/rock.jpg")
+        time.sleep(2)
+        driver.find_element_by_css_selector("input[name='new_images[]']").send_keys(os.path.join(os.path.dirname(__file__),'attachments', 'rock.jpg'))
+        time.sleep(2)
         driver.find_element_by_css_selector("input[name=date_valid_from]").send_keys("01.01.2021")
         driver.find_element_by_css_selector("input[name=date_valid_to]").send_keys("31.12.2025")
 
