@@ -17,4 +17,4 @@ def test_lesson6_task_11_chrome(chrome_driver):
 
     Registration.registration(chrome_driver, email, password)
     Login.user_login(chrome_driver, email, password)
-    Login.user_logout((chrome_driver))
+    Login.user_logout(chrome_driver)

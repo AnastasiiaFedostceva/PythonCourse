@@ -1,8 +1,13 @@
+import time
+
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.select import Select
+from selenium.webdriver.support import wait
+from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.support.wait import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
 
 from PythonCourse.base_class import BaseClass
+from PythonCourse.actions import Actions
 import re
 
 
@@ -80,3 +85,61 @@ class Item(BaseClass):
         assert item_name == item_name_item_page
         assert regular_price_main_text == regular_price_item_text
         assert campaign_price_main_text == campaign_price_item_text
+
+    def item_creation(driver, item):
+        wait = WebDriverWait(driver, 10)
+        time.sleep(1)
+
+        wait.until(ec.element_to_be_clickable((By.XPATH, "//span[text()='Catalog']")))
+        driver.find_element_by_xpath("//span[text()='Catalog']").click()
+
+        wait.until(ec.element_to_be_clickable((By.XPATH, "//a[text()=' Add New Product']")))
+        driver.find_element_by_xpath("//a[text()=' Add New Product']").click()
+
+        wait.until(ec.visibility_of_element_located((By.XPATH, "//h1[text()=' Add New Product']")))
+
+        # General
+        driver.find_element_by_xpath("//strong[text()='Status']/../label[text()=' Enabled']/input").click()
+        time.sleep(3)
+        driver.find_element_by_xpath("//strong[text()='Name']/..//input").send_keys(item)
+        time.sleep(3)
+        driver.find_element_by_xpath("//strong[text()='Code']/..//input").send_keys("00000")
+        Actions.checkbox_status(driver, "//input[@data-name='Rubber Ducks']")
+        Actions.checkbox_status(driver, "//td[text()='Unisex']/../td/input")
+        driver.find_element_by_css_selector("input[name=quantity]").send_keys(100)
+        select_status = Select(driver.find_element_by_css_selector("select[name=sold_out_status_id]"))
+        select_status.select_by_visible_text("Temporary sold out")
+        print(f"{Actions.file_path}/attachments/rock.jpg")
+        driver.find_element_by_css_selector("input[name='new_images[]']").send_keys(
+            f"{Actions.file_path}/attachments/rock.jpg")
+        driver.find_element_by_css_selector("input[name=date_valid_from]").send_keys("01.01.2021")
+        driver.find_element_by_css_selector("input[name=date_valid_to]").send_keys("31.12.2025")
+
+        # Information
+        driver.find_element_by_xpath("//a[text()='Information']").click()
+        time.sleep(1)
+
+        select_manufacturer = Select(driver.find_element_by_css_selector("select[name=manufacturer_id]"))
+        select_manufacturer.select_by_visible_text("ACME Corp.")
+        driver.find_element_by_css_selector("input[name=keywords]").send_keys("Duck")
+        driver.find_element_by_css_selector("input[name='short_description[en]']").send_keys(
+            "Short desc")
+        driver.find_element_by_css_selector("div.trumbowyg-editor").send_keys("Item desc")
+        driver.find_element_by_css_selector("input[name='head_title[en]']").send_keys(item)
+        driver.find_element_by_css_selector("input[name='meta_description[en]']").send_keys(item)
+
+        # Prices
+        driver.find_element_by_xpath("//a[text()='Prices']").click()
+        time.sleep(1)
+
+        driver.find_element_by_css_selector("input[name=purchase_price]").send_keys("12,00")
+        select_currency = Select(driver.find_element_by_css_selector("select[name=purchase_price_currency_code]"))
+        select_currency.select_by_visible_text("Euros")
+        driver.find_element_by_css_selector("input[name='prices[USD]']").send_keys("10.00")
+        driver.find_element_by_css_selector("input[name='prices[EUR]']").send_keys("12.00")
+
+        # Save
+        driver.find_element_by_css_selector("button[name=save]").click()
+        wait.until(ec.visibility_of_element_located((By.CSS_SELECTOR, "div.notice.success")))
+
+
