@@ -36,3 +36,16 @@ class Login(BaseClass):
             EC.element_to_be_clickable((By.XPATH, xpath_logo)))
 
         element.click()
+
+    def user_login(driver, email, password):
+        wait = WebDriverWait(driver, 10)
+        wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, "input[name=email]")))
+
+        driver.find_element_by_css_selector("input[name=email]").send_keys(email)
+        driver.find_element_by_css_selector("input[name=password]").send_keys(password)
+        driver.find_element_by_css_selector("button[name=login]").click()
+
+        wait = WebDriverWait(driver, 3)
+
+        wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, "div.notice.success")))
+        driver.find_element_by_xpath("//a[text()='Logout']").click()
