@@ -48,4 +48,6 @@ class Login(BaseClass):
         wait = WebDriverWait(driver, 3)
 
         wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, "div.notice.success")))
+
+    def user_logout(driver):
         driver.find_element_by_xpath("//a[text()='Logout']").click()

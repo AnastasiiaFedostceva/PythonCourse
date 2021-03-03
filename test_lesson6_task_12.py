@@ -11,10 +11,8 @@ def chrome_driver(request):
     request.addfinalizer(wd.quit)
     return wd
 
-def test_lesson6_task_11_chrome(chrome_driver):
+def test_lesson6_task_12_chrome(chrome_driver):
     email = "{}@mailinator.com".format(Actions.randomString())
     password = '12345'
 
     Registration.registration(chrome_driver, email, password)
-    Login.user_login(chrome_driver, email, password)
-    Login.user_logout((chrome_driver))
