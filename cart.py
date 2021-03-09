@@ -1,17 +1,13 @@
-import os
 import time
 
 from selenium.webdriver import ActionChains
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.support.select import Select
-from selenium.webdriver.support import wait
 from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.support.wait import WebDriverWait
 
 from PythonCourse.base_class import BaseClass
-from PythonCourse.actions import Actions
-import re
+
 
 class Cart(BaseClass):
     def add_item_to_cart(driver):
