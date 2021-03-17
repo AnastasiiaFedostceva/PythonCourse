@@ -143,4 +143,25 @@ class Item(BaseClass):
         driver.find_element_by_css_selector("button[name=save]").click()
         wait.until(ec.visibility_of_element_located((By.CSS_SELECTOR, "div.notice.success")))
 
+    def item_alert_check(driver):
+        driver.find_element_by_xpath("//span[text()='Catalog']").click()
+        time.sleep(15)
+        #wait = WebDriverWait(driver, 10)
+        #wait.until(ec.presence_of_element_located((By.XPATH, "//form[@name='catalog_form']")))
+
+        driver.find_element_by_xpath("//form[@name='catalog_form']//a[text()='Rubber Ducks']").click()
+        items_array = len(driver.find_elements_by_xpath("//*[@class='dataTable']//img/../a"))
+
+        for i in range(items_array):
+            driver.find_elements_by_xpath("//*[@class='dataTable']//img/../a")[i].click()
+            logs = driver.get_log("browser")
+
+            if len(logs) > 0:
+                print("No alerts")
+            else:
+                print("Alerts >>>> ")
+                for log in logs:
+                    print(log)
+
+            driver.get("http://localhost/litecart/admin/?app=catalog&doc=catalog&category_id=1")
 

@@ -13,7 +13,7 @@ class Actions(BaseClass):
 
     def click(css_locator, driver):
         driver.find_element_by_css_selector(css_locator).click()
-        time.sleep(1)
+        time.sleep(5)
 
     def randomString(length=10):
         """Generate a random string of fixed length"""
